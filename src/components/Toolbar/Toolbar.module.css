@@ -1,0 +1,261 @@
+.toolbar {
+  min-height: 76px;
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) minmax(240px, 380px) auto;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 24px;
+  background: rgba(12, 18, 29, 0.9);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+  backdrop-filter: blur(14px);
+}
+
+.pathGroup {
+  min-width: 0;
+}
+
+.breadcrumbs {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow: hidden;
+}
+
+.crumb {
+  max-width: 150px;
+  min-height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  overflow: hidden;
+  border: 0;
+  background: transparent;
+  color: #b8c2cc;
+  font-size: 14px;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.crumb:hover {
+  color: #2dd4bf;
+  transform: none;
+}
+
+.crumbActive {
+  color: #f7fafc;
+}
+
+.separator,
+.pathMeta {
+  color: #738195;
+}
+
+.pathMeta {
+  display: block;
+  margin-top: 2px;
+  font-size: 12px;
+}
+
+.searchWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.searchBar {
+  height: 42px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 12px;
+  color: #8fa2b7;
+  background: rgba(255, 255, 255, 0.055);
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  border-radius: 8px;
+}
+
+.searchBar:focus-within {
+  border-color: rgba(45, 212, 191, 0.62);
+  box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.12);
+}
+
+.searchInput {
+  width: 100%;
+  padding: 0;
+  color: #f7fafc;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  font-size: 14px;
+}
+
+.searchInput::placeholder {
+  color: #738195;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.btnPrimary,
+.btnSecondary {
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 8px;
+  padding: 0 14px;
+  font-size: 13px;
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+.btnPrimary {
+  color: #041312;
+  border: 0;
+  background: linear-gradient(135deg, #5eead4, #38bdf8);
+}
+
+.btnSecondary {
+  color: #f7fafc;
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.dropdownWrapper {
+  position: relative;
+}
+
+.menuDropdown {
+  min-width: 184px;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: var(--z-dropdown);
+  padding: 6px;
+  background: rgba(15, 23, 42, 0.96);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 8px;
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.34);
+}
+
+.rightDropdown {
+  right: 0;
+  left: auto;
+}
+
+.dropdownItem {
+  width: 100%;
+  min-height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 6px;
+  color: #c7d2df;
+  background: transparent;
+  font-size: 13px;
+  font-weight: 650;
+  text-align: left;
+}
+
+.dropdownItem:hover {
+  background: rgba(255, 255, 255, 0.07);
+  color: #f7fafc;
+  transform: none;
+}
+
+.dangerItem {
+  color: #fca5a5;
+}
+
+.viewSegment {
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  padding: 3px;
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.045);
+}
+
+.viewSegment button {
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 6px;
+  color: #8fa2b7;
+  background: transparent;
+}
+
+.viewSegment button:hover,
+.viewSegment .segmentActive {
+  color: #f7fafc;
+  background: rgba(45, 212, 191, 0.18);
+  transform: none;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid rgba(45, 212, 191, 0.28);
+  border-radius: 50%;
+  color: #061312;
+  background: #5eead4;
+  font-weight: 850;
+}
+
+.hiddenInput {
+  display: none;
+}
+
+@media (max-width: 1100px) {
+  .toolbar {
+    grid-template-columns: minmax(160px, 1fr) auto;
+  }
+
+  .searchWrapper {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+}
+
+@media (max-width: 740px) {
+  .toolbar {
+    padding: 12px 14px;
+    grid-template-columns: 1fr;
+  }
+
+  .actions {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .crumb {
+    max-width: 96px;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinning {
+  animation: spin 1s linear infinite;
+}

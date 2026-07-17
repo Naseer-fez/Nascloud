@@ -1,0 +1,33 @@
+.stack {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 1000;
+  display: grid;
+  gap: 10px;
+  width: min(360px, calc(100vw - 24px));
+}
+
+.toast {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 10px;
+  align-items: center;
+  padding: 12px 14px;
+  color: var(--text);
+  background: var(--panel-strong);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--info);
+  border-radius: 8px;
+  box-shadow: var(--shadow-lg);
+  animation: toast-in 180ms ease-out;
+}
+
+.toast button {
+  width: 28px;
+  height: 28px;
+}
+
+.success { border-left-color: var(--success); }
+.error { border-left-color: var(--danger); }
+.info { border-left-color: var(--info); }

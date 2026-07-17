@@ -1,0 +1,224 @@
+.sidebar {
+  width: 272px;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sidebar);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  overflow: hidden;
+  background: rgba(10, 15, 25, 0.96);
+  border-right: 1px solid rgba(148, 163, 184, 0.16);
+  transition: width var(--transition-normal);
+}
+
+.collapsed {
+  width: 72px;
+}
+
+.brand {
+  height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 0 14px;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.14);
+}
+
+.logo {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #5eead4;
+}
+
+.logoText {
+  overflow: hidden;
+  color: #f7fafc;
+  font-size: 17px;
+  font-weight: 850;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.toggleBtn {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  padding: 0;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  border-radius: 8px;
+  color: #aebccc;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.nav {
+  flex: 1;
+  padding: 14px 0;
+  overflow-y: auto;
+}
+
+.sectionTitle {
+  padding: 16px 18px 8px;
+  color: #738195;
+  font-size: 11px;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.treeContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.treeItem {
+  min-height: 38px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0 8px;
+  padding: 0 12px;
+  border-radius: 8px;
+  color: #aebccc;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 650;
+  user-select: none;
+}
+
+.treeItem:hover,
+.treeItem.active {
+  color: #f7fafc;
+  background: rgba(45, 212, 191, 0.11);
+}
+
+.treeItem.active {
+  box-shadow: inset 3px 0 0 #5eead4;
+}
+
+.treeItemIcon {
+  flex-shrink: 0;
+  color: #5eead4;
+}
+
+.treeItemLabel {
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chevron,
+.chevronSpacer {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.chevron {
+  padding: 0;
+  border: 0;
+  border-radius: 5px;
+  color: #8fa2b7;
+  background: transparent;
+}
+
+.chevron svg {
+  transition: transform var(--transition-fast);
+}
+
+.chevron.open svg {
+  transform: rotate(90deg);
+}
+
+.treeChildren {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.treeEmpty {
+  min-height: 38px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0 8px;
+  padding: 0 14px;
+  color: #738195;
+  font-size: 13px;
+}
+
+.divider {
+  height: 1px;
+  margin: 14px 16px;
+  background: rgba(148, 163, 184, 0.14);
+}
+
+.storageCard {
+  padding: 14px;
+  border-top: 1px solid rgba(148, 163, 184, 0.14);
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.storageHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  color: #c7d2df;
+  font-size: 12px;
+  font-weight: 750;
+}
+
+.progressBar {
+  height: 7px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(148, 163, 184, 0.17);
+}
+
+.progressFill {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #5eead4, #fbbf24);
+  transition: width var(--transition-slow);
+}
+
+.storageText {
+  margin-top: 8px;
+  color: #8fa2b7;
+  font-size: 11px;
+}
+
+.collapsedStorageIcon {
+  display: flex;
+  justify-content: center;
+  margin-top: 8px;
+  color: #5eead4;
+}
+
+.treeSkeleton {
+  padding: 8px 16px;
+}
+
+.skeletonItem {
+  height: 12px;
+  margin-bottom: 10px;
+  border-radius: 999px;
+  background: rgba(148, 163, 184, 0.16);
+  animation: pulseSlow 1.8s infinite ease-in-out;
+}
+
+@media (max-width: 760px) {
+  .sidebar {
+    width: 72px;
+  }
+}
