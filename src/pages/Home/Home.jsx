@@ -16,7 +16,7 @@ import {
   Layers,
   Database
 } from 'lucide-react';
-import { DOWNLOAD_SETUP_URL, DOWNLOAD_SERVER_URL, GITHUB_URL } from '../../config';
+import { DOWNLOAD_ZIP_URL, GITHUB_URL } from '../../config';
 import styles from './Home.module.css';
 
 // Mockup image imports
@@ -34,23 +34,13 @@ export default function Home() {
   const handleDownloadAll = (e) => {
     e.preventDefault();
     
-    // Download Setup Wizard
-    const setupLink = document.createElement('a');
-    setupLink.href = DOWNLOAD_SETUP_URL;
-    setupLink.download = 'PersonalDriveSetup.exe';
-    document.body.appendChild(setupLink);
-    setupLink.click();
-    document.body.removeChild(setupLink);
-
-    // Download Server Manager (with brief delay to avoid blocking)
-    setTimeout(() => {
-      const serverLink = document.createElement('a');
-      serverLink.href = DOWNLOAD_SERVER_URL;
-      serverLink.download = 'PersonalDriveServer.exe';
-      document.body.appendChild(serverLink);
-      serverLink.click();
-      document.body.removeChild(serverLink);
-    }, 250);
+    // Download Setup & Server ZIP archive
+    const zipLink = document.createElement('a');
+    zipLink.href = DOWNLOAD_ZIP_URL;
+    zipLink.download = 'NasCloud.zip';
+    document.body.appendChild(zipLink);
+    zipLink.click();
+    document.body.removeChild(zipLink);
   };
 
   return (

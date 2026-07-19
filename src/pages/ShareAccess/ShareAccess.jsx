@@ -48,7 +48,7 @@ export default function ShareAccess() {
     <div className={styles.wrapper}>
       <div className={styles.card}>
         <div className={styles.brand}>
-          <span className={styles.logoIcon}>☁️</span>
+          <img src="/nascloud.svg" alt="NasCloud Logo" className={styles.logoIcon} />
           <h2>NasCloud</h2>
         </div>
         

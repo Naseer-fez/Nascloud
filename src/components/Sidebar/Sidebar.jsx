@@ -134,7 +134,7 @@ export default function Sidebar({ collapsed, onToggle }) {
     <aside className={`${styles.sidebar} ${collapsed ? styles.collapsed : ''}`}>
       <div className={styles.brand}>
         <button className={styles.logo} onClick={() => navigate('/')} title="PersonalDrive">
-          <Cloud size={22} aria-hidden="true" />
+          <img src="/nascloud.svg" alt="NasCloud Logo" style={{ width: '24px', height: '24px', objectFit: 'contain' }} aria-hidden="true" />
           {!collapsed && <span className={styles.logoText}>PersonalDrive</span>}
         </button>
         <button className={styles.toggleBtn} onClick={onToggle} title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}>

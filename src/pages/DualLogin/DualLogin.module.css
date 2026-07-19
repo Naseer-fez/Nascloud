@@ -321,3 +321,11 @@
   background: rgba(56, 189, 248, 0.05);
   transform: translateX(-2px);
 }
+
+.logoImg {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  margin-bottom: 12px;
+  filter: drop-shadow(0 0 15px rgba(255,255,255,0.15));
+}

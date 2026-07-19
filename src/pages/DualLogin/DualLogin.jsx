@@ -196,7 +196,7 @@ export default function DualLogin() {
         {mode === 'access' && (
           <div className={styles.formContent}>
             <div className={styles.brandHeader}>
-              <span className={styles.logo}>☁️</span>
+              <img src="/nascloud.svg" alt="NasCloud Logo" className={styles.logoImg} />
               <h1>Access Drive</h1>
             </div>
 
@@ -255,7 +255,7 @@ export default function DualLogin() {
         {mode === 'register' && (
           <div className={styles.formContent}>
             <div className={styles.brandHeader}>
-              <span className={styles.logo}>🖥️</span>
+              <img src="/nascloud.svg" alt="NasCloud Logo" className={styles.logoImg} />
               <h1>Admin Registration</h1>
             </div>
 
@@ -318,7 +318,7 @@ export default function DualLogin() {
         {mode === 'admin' && (
           <div className={styles.formContent}>
             <div className={styles.brandHeader}>
-              <span className={styles.logo}>🖥️</span>
+              <img src="/nascloud.svg" alt="NasCloud Logo" className={styles.logoImg} />
               <h1>Admin Login</h1>
             </div>
 
