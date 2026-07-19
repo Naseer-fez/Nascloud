@@ -24,6 +24,8 @@ import fileBrowserPreview from '../../assets/file_browser_preview.png';
 import setupWizardPreview from '../../assets/setup_wizard_preview.png';
 
 export default function Home() {
+  const isDirectDownload = DOWNLOAD_ZIP_URL.endsWith('.zip') || DOWNLOAD_ZIP_URL.endsWith('.exe');
+
   const handleScroll = (id) => {
     const element = document.getElementById(id);
     if (element) {
@@ -31,17 +33,7 @@ export default function Home() {
     }
   };
 
-  const handleDownloadAll = (e) => {
-    e.preventDefault();
-    
-    // Download Setup & Server ZIP archive
-    const zipLink = document.createElement('a');
-    zipLink.href = DOWNLOAD_ZIP_URL;
-    zipLink.download = 'NasCloud.zip';
-    document.body.appendChild(zipLink);
-    zipLink.click();
-    document.body.removeChild(zipLink);
-  };
+
 
   return (
     <div className={styles.homeContainer}>
@@ -66,13 +58,16 @@ export default function Home() {
           <Link to="/login" className={styles.loginBtn}>
             Sign In
           </Link>
-          <button 
-            onClick={handleDownloadAll}
+          <a 
+            href={DOWNLOAD_ZIP_URL}
+            download={isDirectDownload ? "NasCloud.zip" : undefined}
+            target={isDirectDownload ? undefined : "_blank"}
+            rel={isDirectDownload ? undefined : "noopener noreferrer"}
             className={styles.downloadNavBtn}
           >
             <Download size={16} />
             <span>Download</span>
-          </button>
+          </a>
         </div>
       </nav>
 
@@ -96,13 +91,16 @@ export default function Home() {
           </p>
           
           <div className={styles.heroActions}>
-            <button 
-              onClick={handleDownloadAll}
+            <a 
+              href={DOWNLOAD_ZIP_URL}
+              download={isDirectDownload ? "NasCloud.zip" : undefined}
+              target={isDirectDownload ? undefined : "_blank"}
+              rel={isDirectDownload ? undefined : "noopener noreferrer"}
               className={styles.primaryDownloadBtn}
             >
               <Download size={20} />
               <span>Download NasCloud</span>
-            </button>
+            </a>
             <a 
               href={GITHUB_URL} 
               target="_blank" 
@@ -271,7 +269,15 @@ export default function Home() {
             <button onClick={() => handleScroll('features')} className={styles.footerLink}>Features</button>
             <button onClick={() => handleScroll('how-it-works')} className={styles.footerLink}>How It Works</button>
             <button onClick={() => handleScroll('preview')} className={styles.footerLink}>Preview</button>
-            <button onClick={handleDownloadAll} className={styles.footerLink}>Download</button>
+            <a 
+              href={DOWNLOAD_ZIP_URL} 
+              download={isDirectDownload ? "NasCloud.zip" : undefined}
+              target={isDirectDownload ? undefined : "_blank"}
+              rel={isDirectDownload ? undefined : "noopener noreferrer"}
+              className={styles.footerLink}
+            >
+              Download
+            </a>
             <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer" className={styles.footerLink}>GitHub</a>
             <Link to="/login" className={styles.footerLink}>Sign In</Link>
           </div>
