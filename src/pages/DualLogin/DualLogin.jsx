@@ -37,6 +37,16 @@ export default function DualLogin() {
 
   // Coordinated mode switching function
   const changeMode = (newMode) => {
+    if (newMode === 'admin') {
+      const storedUsername = localStorage.getItem(MAIN_USERNAME_KEY);
+      const storedPassword = localStorage.getItem(MAIN_PASSWORD_KEY);
+      if (storedUsername && storedPassword) {
+        addToast('Admin session restored. Redirecting to Dashboard...', 'success');
+        navigate('/dashboard');
+        return;
+      }
+    }
+
     if (newMode === 'access') {
       if (mode !== 'access') {
         setClipState('clippedRight');

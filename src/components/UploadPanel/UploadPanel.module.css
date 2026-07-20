@@ -18,17 +18,47 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 14px;
+  padding: 0 10px 0 14px;
   border: 0;
   border-bottom: 1px solid var(--border-subtle);
   border-radius: 0;
   color: var(--text-primary);
   background: rgba(255, 255, 255, 0.01);
-  cursor: pointer;
+  gap: 8px;
 }
 
-.header:hover {
-  background: var(--bg-secondary);
+.headerToggle {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  min-height: 44px;
+}
+
+.headerToggle:hover {
+  opacity: 0.85;
+}
+
+.dismissBtn {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  background: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--duration-fast);
+}
+
+.dismissBtn:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .title {

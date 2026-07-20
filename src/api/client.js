@@ -1,5 +1,5 @@
 import { AUTH_TOKEN_KEY, AUTH_USER_ID_KEY, MAIN_ACCESS_CODE_KEY } from '../config';
-import { BACKEND_SERVER_ERROR_MESSAGE, buildBackendUrl, saveBackendUrl } from './backendUrl';
+import { BACKEND_SERVER_ERROR_MESSAGE, buildBackendUrl, saveBackendUrl, isMainServerUrl } from './backendUrl';
 import { API_BASE_URL } from '../config';
 import { centralResolve } from './centralServer';
 import { logFez } from '../utils/testLogger';
@@ -16,6 +16,22 @@ function shouldSendAuthHeader() {
   return localStorage.getItem(AUTH_USER_ID_KEY) !== '0';
 }
 
+function isBackendConnectionError(error) {
+  if (!error) return false;
+  if (error.name === 'AbortError' || error.message === 'Aborted') return false;
+  const msg = String(error.message || error || '').toLowerCase();
+  return (
+    msg === BACKEND_SERVER_ERROR_MESSAGE.toLowerCase() ||
+    msg.includes('502') ||
+    msg.includes('503') ||
+    msg.includes('504') ||
+    msg.includes('failed to fetch') ||
+    msg.includes('networkerror') ||
+    msg.includes('resolve the backend link') ||
+    msg.includes('backend url missing')
+  );
+}
+
 /**
  * Central API client for NasCloud.
  * Handles auth token inclusion, 401 redirects, blob formatting, and GET with bodies.
@@ -29,10 +45,15 @@ export async function apiCall(path, options = {}) {
     isBlob = false,
     extraHeaders = {},
     queryParams = '',
+    signal = null,
   } = options;
 
   const executeRequest = async () => {
     const url = buildBackendUrl(path, queryParams);
+    if (!isPublic && isMainServerUrl(url)) {
+      logFez('Blocked attempt to send client request to main server', { path, url });
+      throw new Error(BACKEND_SERVER_ERROR_MESSAGE);
+    }
     logFez('PersonalDrive API request', { method, path, url, isPublic, isBlob });
 
     const headers = { ...extraHeaders };
@@ -50,6 +71,7 @@ export async function apiCall(path, options = {}) {
 
     const fetchOptions = { method, headers };
     if (body) fetchOptions.body = isFormData ? body : JSON.stringify(body);
+    if (signal) fetchOptions.signal = signal;
 
     if (method.toUpperCase() === 'GET' && body) {
       return new Promise((resolve, reject) => {
@@ -58,6 +80,17 @@ export async function apiCall(path, options = {}) {
         if (isBlob) xhr.responseType = 'blob';
         Object.entries(headers).forEach(([k, v]) => xhr.setRequestHeader(k, v));
 
+        if (signal) {
+          if (signal.aborted) {
+            reject(new DOMException('Aborted', 'AbortError'));
+            return;
+          }
+          signal.addEventListener('abort', () => {
+            xhr.abort();
+            reject(new DOMException('Aborted', 'AbortError'));
+          });
+        }
+
         xhr.onload = async () => {
           if (!isPublic && xhr.status === 401) {
             localStorage.removeItem(AUTH_TOKEN_KEY);
@@ -65,6 +98,12 @@ export async function apiCall(path, options = {}) {
             window.dispatchEvent(new CustomEvent('auth:unauthorized'));
             logFez('PersonalDrive API unauthorized response', { path, status: xhr.status });
             reject(new Error('Session expired. Please log in again.'));
+            return;
+          }
+
+          if (xhr.status === 0 || xhr.status === 502 || xhr.status === 503 || xhr.status === 504) {
+            logFez('PersonalDrive API XHR gateway/network error status', { path, status: xhr.status });
+            reject(new Error(BACKEND_SERVER_ERROR_MESSAGE));
             return;
           }
 
@@ -104,7 +143,15 @@ export async function apiCall(path, options = {}) {
     try {
       response = await fetch(url, fetchOptions);
     } catch (error) {
+      if (error.name === 'AbortError' || (signal && signal.aborted)) {
+        throw error;
+      }
       logFez('PersonalDrive API fetch failed', { path, url, error: error.message });
+      throw new Error(BACKEND_SERVER_ERROR_MESSAGE);
+    }
+
+    if (response.status === 0 || response.status === 502 || response.status === 503 || response.status === 504) {
+      logFez('PersonalDrive API gateway/network error status', { path, status: response.status });
       throw new Error(BACKEND_SERVER_ERROR_MESSAGE);
     }
 
@@ -145,7 +192,7 @@ export async function apiCall(path, options = {}) {
   try {
     return await executeRequest();
   } catch (error) {
-    const shouldRetry = !isPublic && error.message === BACKEND_SERVER_ERROR_MESSAGE;
+    const shouldRetry = !isPublic && isBackendConnectionError(error);
     if (!shouldRetry) throw error;
 
     const accessCode = localStorage.getItem(MAIN_ACCESS_CODE_KEY);

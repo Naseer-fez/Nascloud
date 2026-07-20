@@ -188,8 +188,8 @@ export function moveFile(userid, oldpath, newpath) {
   }));
 }
 
-export function searchFile(userid, filename) {
-  return apiCall(`searchfile/${userid}/${encodeURIComponent(filename)}/`);
+export function searchFile(userid, filename, options = {}) {
+  return apiCall(`searchfile/${userid}/${encodeURIComponent(filename)}/`, options);
 }
 
 /* ==========================================================================
