@@ -23,6 +23,9 @@ export default function Settings() {
   const [delLoading, setDelLoading] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
 
+  // Theme state
+  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'system');
+
   const handleUpdate = async (e) => {
     e.preventDefault();
     if (!username.trim() && !email.trim() && !password) {
@@ -72,6 +75,21 @@ export default function Settings() {
     } finally {
       setDelLoading(false);
     }
+  };
+
+  const handleThemeChange = (newTheme) => {
+    setTheme(newTheme);
+    if (newTheme === 'system') {
+      localStorage.setItem('theme', 'system');
+      document.documentElement.removeAttribute('data-theme');
+    } else {
+      localStorage.setItem('theme', newTheme);
+      document.documentElement.setAttribute('data-theme', newTheme);
+    }
+    addToast(
+      `Theme updated to ${newTheme === 'system' ? 'System Default' : newTheme === 'light' ? 'Sage Mist' : 'Forest Dark'}`, 
+      'success'
+    );
   };
 
   return (
@@ -128,6 +146,41 @@ export default function Settings() {
               {loading ? 'Updating settings...' : 'Update Settings'}
             </button>
           </form>
+        </div>
+
+        {/* Theme Preferences Card */}
+        <div className={styles.card}>
+          <h3>Theme Preferences</h3>
+          <p className={styles.cardDesc}>Select a visual style for your NasCloud dashboard.</p>
+          
+          <div className={styles.themeOptions}>
+            <button
+              type="button"
+              className={`${styles.themeBtn} ${theme === 'dark' ? styles.themeBtnActive : ''}`}
+              onClick={() => handleThemeChange('dark')}
+            >
+              <span className={styles.themePreviewDark}></span>
+              Forest Dark
+            </button>
+            
+            <button
+              type="button"
+              className={`${styles.themeBtn} ${theme === 'light' ? styles.themeBtnActive : ''}`}
+              onClick={() => handleThemeChange('light')}
+            >
+              <span className={styles.themePreviewLight}></span>
+              Sage Mist (Light)
+            </button>
+            
+            <button
+              type="button"
+              className={`${styles.themeBtn} ${theme === 'system' ? styles.themeBtnActive : ''}`}
+              onClick={() => handleThemeChange('system')}
+            >
+              <span className={styles.themePreviewSystem}></span>
+              System Default
+            </button>
+          </div>
         </div>
 
         {/* Danger zone delete accounts */}
