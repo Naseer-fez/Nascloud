@@ -100,6 +100,8 @@ export function AuthProvider({ children }) {
   };
 
   const logout = () => {
+    localStorage.clear();
+    document.documentElement.removeAttribute('data-theme');
     dispatch({ type: 'LOGOUT' });
   };
 

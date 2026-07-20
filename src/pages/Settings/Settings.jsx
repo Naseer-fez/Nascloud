@@ -23,8 +23,8 @@ export default function Settings() {
   const [delLoading, setDelLoading] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
 
-  // Theme state
-  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'system');
+  // Theme state (restricted to 'dark' or 'light')
+  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'dark');
 
   const handleUpdate = async (e) => {
     e.preventDefault();
@@ -79,15 +79,10 @@ export default function Settings() {
 
   const handleThemeChange = (newTheme) => {
     setTheme(newTheme);
-    if (newTheme === 'system') {
-      localStorage.setItem('theme', 'system');
-      document.documentElement.removeAttribute('data-theme');
-    } else {
-      localStorage.setItem('theme', newTheme);
-      document.documentElement.setAttribute('data-theme', newTheme);
-    }
+    localStorage.setItem('theme', newTheme);
+    document.documentElement.setAttribute('data-theme', newTheme);
     addToast(
-      `Theme updated to ${newTheme === 'system' ? 'System Default' : newTheme === 'light' ? 'Sage Mist' : 'Forest Dark'}`, 
+      `Theme updated to ${newTheme === 'light' ? 'Sage Mist' : 'Forest Dark'}`, 
       'success'
     );
   };
@@ -148,7 +143,7 @@ export default function Settings() {
           </form>
         </div>
 
-        {/* Theme Preferences Card */}
+        {/* Theme Preferences Card (Dark and Light Options only) */}
         <div className={styles.card}>
           <h3>Theme Preferences</h3>
           <p className={styles.cardDesc}>Select a visual style for your NasCloud dashboard.</p>
@@ -170,15 +165,6 @@ export default function Settings() {
             >
               <span className={styles.themePreviewLight}></span>
               Sage Mist (Light)
-            </button>
-            
-            <button
-              type="button"
-              className={`${styles.themeBtn} ${theme === 'system' ? styles.themeBtnActive : ''}`}
-              onClick={() => handleThemeChange('system')}
-            >
-              <span className={styles.themePreviewSystem}></span>
-              System Default
             </button>
           </div>
         </div>
